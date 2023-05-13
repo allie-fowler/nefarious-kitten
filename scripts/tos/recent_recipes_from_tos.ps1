@@ -1,5 +1,15 @@
 # Get the first CSV file in the current directory
-$inputFile = Get-ChildItem -Path . -Filter "*AlertBook.csv" | Select-Object -First 1
+
+param (
+    [string]$inputFile = ""
+)
+
+# Check if the input file parameter is empty
+if ([string]::IsNullOrEmpty($inputFile)) {
+    $inputFile = Get-ChildItem -Path . -Filter "*AlertBook.csv" | Select-Object -First 1
+}
+
+
 
 # Check if a matching file was found
 if ($inputFile) {
