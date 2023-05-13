@@ -6,7 +6,9 @@ param (
 
 # Check if the input file parameter is empty
 if ([string]::IsNullOrEmpty($inputFile)) {
-    Write-Host "Current directory is" ; pwd
+    $currentDirectory = Get-Location
+    Write-Host "Current Directory: $currentDirectory"
+
     $inputFile = Get-ChildItem -Path . -Filter "*AlertBook.csv" | Select-Object -First 1
 }
 
