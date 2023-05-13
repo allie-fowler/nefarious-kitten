@@ -19,5 +19,5 @@ jobs:
         shell: pwsh
         run: |
           Set-PSDebug -Trace 1
-          tests/test_recent_tos_recipes.ps1
+          scripts/tos/recent_recipes_from_tos.ps1
           Set-PSDebug -Off
