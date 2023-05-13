@@ -1,18 +1,27 @@
-param (
-# Should be a tos alert export file
-    [Parameter(Mandatory=$true)]
-    [string]$InputFile
-)
+# Get the first CSV file in the current directory
+$inputFile = Get-ChildItem -Path . -Filter "*AlertBook.csv" | Select-Object -First 1
 
-# Number of days back to collect symbols
-$lookBack = -7
+# Check if a matching file was found
+if ($inputFile) {
+    # Use the file as your input
+    # $inputFile.FullName contains the full path to the file
+    Write-Host "Using file: $($inputFile.FullName)"
+    
+# Check if the file was not modified today
+    if ($inputFile.LastWriteTime.Date -ne (Get-Date).Date) {
+        Write-Host -ForegroundColor Yellow "Warning: The input file was not modified today."
+    }
+    
+    # Rest of your script using $inputFile.FullName
+    # Number of days back to collect symbols
+    $lookBack = -7
 
-$datenow = Get-Date -Format "MMddyyyy-HHmmss"
-$DaysAgo = (Get-Date).AddDays($lookBack)
-$regex = "\b[A-Z]{1,4}\b"
+    $datenow = Get-Date -Format "MMddyyyy-HHmmss"
+    $DaysAgo = (Get-Date).AddDays($lookBack)
+    $regex = "\b[A-Z]{1,4}\b"
 
-# Find dates in the specified range, grab stock symbols and recipe type
-$symbolsList = Get-Content -Path $InputFile | ForEach-Object {
+    # Find dates in the specified range, grab stock symbols and recipe type
+    $symbolsList = Get-Content -Path $inputFile | ForEach-Object {
     if ($_ -match "\b(\d{1,2}/\d{1,2}/\d{2})\b") {
         $date = [datetime]::ParseExact($matches[1], "M/d/yy", $null)
         if ($date -ge $DaysAgo) {
@@ -32,3 +41,11 @@ $symbolsList = Get-Content -Path $InputFile | ForEach-Object {
 # Output the list to a window"
 $wshell = New-Object -ComObject Wscript.Shell
 $Output = $wshell.Popup($symbolsList,0,"header",0+64)
+
+}
+else {
+    # Throw an error if no CSV file is found
+    throw "No CSV file found in the current directory."
+}
+
+
