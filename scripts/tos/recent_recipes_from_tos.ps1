@@ -5,7 +5,7 @@ param (
 )
 
 # Check if the input file parameter is empty
-if ([string]::IsNullOrEmpty($inputFile)) {
+if ([string]::IsNullOrEmpty($InputFile)) {
     $currentDirectory = Get-Location
     Write-Host "Current Directory: $currentDirectory"
 
@@ -16,7 +16,7 @@ if ([string]::IsNullOrEmpty($inputFile)) {
 if ($inputFile) {
     # Use the file as your input
     # $inputFile.FullName contains the full path to the file
-    Write-Host "Using file: $($inputFile.FullName)"
+    Write-Host "Using file: $($inputFile)"
     ls
     
     # Check if the file was not modified today
