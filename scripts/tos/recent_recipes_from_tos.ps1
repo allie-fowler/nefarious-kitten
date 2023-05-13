@@ -51,8 +51,9 @@ if ($inputFile) {
 } | Sort-Object -Unique | Out-String
 
 # Output the list to a window"
-$wshell = New-Object -ComObject Wscript.Shell
-$Output = $wshell.Popup($symbolsList,0,"header",0+64)
+#$wshell = New-Object -ComObject Wscript.Shell
+#$Output = $wshell.Popup($symbolsList,0,"header",0+64)
+Write-Host "$symbolsList"
 
 }
 else {
