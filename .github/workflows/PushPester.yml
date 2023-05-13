@@ -16,7 +16,8 @@ jobs:
         run: |
           Invoke-Pester tests/test_recent_tos_recipes.ps1 tests/testdata/2023-05-13-AlertBook.csv -Passthru
       - name: Run the recent_recipes_from_tos.ps1 script
+        shell: pwsh
         run: |
           Set-PSDebug -Trace 1
-          pwsh tests/test_recent_tos_recipes.ps1
+          tests/test_recent_tos_recipes.ps1
           Set-PSDebug -Off
