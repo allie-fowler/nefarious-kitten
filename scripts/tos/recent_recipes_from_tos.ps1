@@ -17,6 +17,7 @@ if ($inputFile) {
     # Use the file as your input
     # $inputFile.FullName contains the full path to the file
     Write-Host "Using file: $($inputFile.FullName)"
+    ls
     
     # Check if the file was not modified today
     if ($inputFile.LastWriteTime.Date -ne (Get-Date).Date) {
