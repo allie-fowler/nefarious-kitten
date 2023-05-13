@@ -6,10 +6,9 @@ param (
 
 # Check if the input file parameter is empty
 if ([string]::IsNullOrEmpty($inputFile)) {
+    Write-Host "Current directory is" ; pwd
     $inputFile = Get-ChildItem -Path . -Filter "*AlertBook.csv" | Select-Object -First 1
 }
-
-
 
 # Check if a matching file was found
 if ($inputFile) {
@@ -17,7 +16,7 @@ if ($inputFile) {
     # $inputFile.FullName contains the full path to the file
     Write-Host "Using file: $($inputFile.FullName)"
     
-# Check if the file was not modified today
+    # Check if the file was not modified today
     if ($inputFile.LastWriteTime.Date -ne (Get-Date).Date) {
         Write-Host -ForegroundColor Yellow "Warning: The input file was not modified today."
     }
