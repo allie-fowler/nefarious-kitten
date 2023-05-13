@@ -1,5 +1,4 @@
 # Get the first CSV file in the current directory
-Set-PSDebug -Trace 1
 
 param (
     [string]$inputFile = ""
@@ -60,4 +59,3 @@ else {
     throw "No CSV file found in the current directory."
 }
 
-Set-PSDebug -Off
