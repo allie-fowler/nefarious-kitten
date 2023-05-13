@@ -1,8 +1,8 @@
-Describe "Testing MyScript.ps1" {
-    Context "When executing MyScript.ps1" {
+Describe "Testing scripts/tos/recent_recipes_from_tos.ps1" {
+    Context "When executing recent_recipes_from_tos.ps1" {
         It "Should complete without any errors" {
             # Run your script and capture the output
-            $output = & "MyScript.ps1"
+            $output = & "scripts/tos/recent_recipes_from_tos.ps1"
 
             # Check if the script completed without errors
             $success = $LASTEXITCODE -eq 0
@@ -13,7 +13,7 @@ Describe "Testing MyScript.ps1" {
 
         It "Should produce the expected output" {
             # Run your script and capture the output
-            $output = & "MyScript.ps1"
+            $output = & "scripts/tos/recent_recipes_from_tos.ps1"
 
             # Define the expected output
             $expectedOutput = "Hello, World!"
