@@ -8,6 +8,8 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Perform a Pester test from the command-line
         shell: pwsh
         run: Test-Path 20*-AlertBook.csv | Should -Be $true
