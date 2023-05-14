@@ -20,7 +20,7 @@ if ($inputFile) {
     
     # Check if the file was not modified today
     $fileModifyDate = (Get-ItemProperty -Path $inputFile -Name LastWriteTime).LastWriteTime.Date.ToString('yyyy-MM-dd')
-    if ($fileModifyDate) -ne (Get-Date -Format 'yyyy-MM-dd')) {
+    if (($fileModifyDate) -ne (Get-Date -Format 'yyyy-MM-dd')) {
         Write-Host "::warning::The input file was not modified today."
     }
 
