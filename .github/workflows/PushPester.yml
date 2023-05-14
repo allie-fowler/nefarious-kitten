@@ -18,6 +18,4 @@ jobs:
       - name: Run the recent_recipes_from_tos.ps1 script
         shell: pwsh
         run: |
-          Set-PSDebug -Trace 1
           scripts/tos/recent_recipes_from_tos.ps1
-          Set-PSDebug -Off
