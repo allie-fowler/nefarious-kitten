@@ -19,16 +19,15 @@ if ($inputFile) {
     Write-Host "Using file: $($inputFile)"
     
     # Check if the file was not modified today
-    $fileModifyDate = (Get-ItemProperty -Path $inputFile -Name LastWriteTime).LastWriteTime.Date.ToString('yyyy-MM-dd').Trim()
+    $fileCreationDate = (Get-ItemProperty -Path $inputFile -Name CreationTime).CreationTime.Date.ToString('yyyy-MM-dd')
     $currentDate = (Get-Date -Format 'yyyy-MM-dd').Trim()
 
-    if ($fileModifyDate -ne $currentDate) {
-        Write-Host "::warning::The input file was not modified today."
+    if ($fileCreationDate -ne $currentDate) {
+       Write-Host "::warning::The input file was not created today."
     }
     
-    Write-Host "File Modify Date: $fileModifyDate"
+    Write-Host "File Modify Date: $fileCreationDate"
     Write-Host "Current Date: $currentDate"
-
 
     # Rest of your script using $inputFile.FullName
     # Number of days back to collect symbols
