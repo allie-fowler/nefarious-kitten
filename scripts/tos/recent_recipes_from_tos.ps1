@@ -17,7 +17,7 @@ if ($inputFile) {
     
     # Check if the file was not modified today
     if ($inputFile.LastWriteTime.Date -ne (Get-Date).Date) {
-        Write-Host "::warning::Warning: The input file was not modified today."
+        Write-Host "::warning::The input file was not modified today."
     }
     
     # Rest of your script using $inputFile.FullName
