@@ -25,6 +25,10 @@ if ($inputFile) {
     if ($fileModifyDate -ne $currentDate) {
         Write-Host "::warning::The input file was not modified today."
     }
+    
+    Write-Host "File Modify Date: $fileModifyDate"
+    Write-Host "Current Date: $currentDate"
+
 
     # Rest of your script using $inputFile.FullName
     # Number of days back to collect symbols
