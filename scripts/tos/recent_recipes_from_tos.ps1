@@ -18,14 +18,6 @@ if ($inputFile) {
     # $inputFile.FullName contains the full path to the file
     Write-Host "Using file: $($inputFile)"
     
-    # Check if the file was not modified today
-    $fileCreationDate = (Get-ItemProperty -Path $inputFile -Name CreationTime).CreationTime.Date.ToString('yyyy-MM-dd')
-    $currentDate = (Get-Date -Format 'yyyy-MM-dd').Trim()
-
-    if ($fileCreationDate -ne $currentDate) {
-       Write-Host "::warning::The input file was not created today."
-    }
-    
     Write-Host "File Modify Date: $fileCreationDate"
     Write-Host "Current Date: $currentDate"
 
