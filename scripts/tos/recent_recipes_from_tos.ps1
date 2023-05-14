@@ -16,10 +16,10 @@ if ($inputFile) {
     Write-Host "Using file: $($inputFile)"
     
     # Check if the file was not modified today
-    if ($inputFile.LastWriteTime.Date -ne (Get-Date).Date) {
+    if ($inputFile.LastWriteTime.Date.ToString('yyyy-MM-dd') -ne (Get-Date -Format 'yyyy-MM-dd')) {
         Write-Host "::warning::The input file was not modified today."
     }
-    
+
     # Rest of your script using $inputFile.FullName
     # Number of days back to collect symbols
     $lookBack = -7
