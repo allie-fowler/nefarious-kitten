@@ -9,6 +9,9 @@ if ([string]::IsNullOrEmpty($InputFile)) {
     $inputFile = Get-ChildItem -Path . -Filter "*AlertBook.csv" | Select-Object -First 1
 }
 
+$PSVersionTable.PSVersion
+
+
 # Check if a matching file was found
 if ($inputFile) {
     # Use the file as your input
