@@ -12,7 +12,7 @@ jobs:
           fetch-depth: 0
       - name: Perform a Pester test from the command-line
         shell: pwsh
-        run: Test-Path 20*-AlertBook.csv | Should -Be $true
+        run: Test-Path input/20*-AlertBook.csv | Should -Be $true
       - name: Perform a Pester test on the recent_recipes_from_tos.ps1 file
         shell: pwsh
         run: |
