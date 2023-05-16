@@ -1,4 +1,4 @@
-# Get the first CSV file in the current directory
+# Get the first CSV file in the input directory
 
 param (
     [string]$inputFile = ""
@@ -6,11 +6,8 @@ param (
 
 # Check if the input file parameter is empty
 if ([string]::IsNullOrEmpty($InputFile)) {
-    $inputFile = Get-ChildItem -Path . -Filter "*AlertBook.csv" | Select-Object -First 1
+    $inputFile = Get-ChildItem -Path . -Filter "input/*AlertBook.csv" | Select-Object -First 1
 }
-
-$PSVersionTable.PSVersion
-
 
 # Check if a matching file was found
 if ($inputFile) {
