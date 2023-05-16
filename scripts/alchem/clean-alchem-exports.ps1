@@ -1,9 +1,15 @@
-param(
-    [Parameter(Mandatory=$true)]
-    [string]$InputFile
+# Get the recipesUP SYM file in the input directory
+
+param (
+    [string]$inputFile = ""
 )
 
-$symbols = Get-Content $InputFile
+# Check if the input file parameter is empty
+if ([string]::IsNullOrEmpty($InputFile)) {
+    $inputFile = Get-ChildItem -Path . -Filter "input/*recipe*UP.sym" | Select-Object -First 1
+}
+
+$symbols = Get-Content $inputFile
 
 $watchlist = @{
     name = "mywatchlist"
