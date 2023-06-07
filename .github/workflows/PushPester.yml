@@ -1,5 +1,5 @@
 name: Test PowerShell on Ubuntu
-on: push
+on: pull_request
 
 jobs:
   pester-test:
@@ -16,16 +16,4 @@ jobs:
     - name: Perform a Pester test on the recent_recipes_from_tos.ps1 file
       shell: pwsh
       run: |
-        Invoke-Pester tests/test_recent_tos_recipes.ps1 tests/testdata/2023-05-13-AlertBook.csv -Passthru
-  get-hits:
-    name: Recipe / Moses hits
-    runs-on: ubuntu-latest
-    steps:
-    - name: Run the recent_recipes_from_tos.ps1 script
-      shell: pwsh
-      run: |
-        scripts/tos/recent_recipes_from_tos.ps1
-    - name: Clean Up and Down recipe exports from Alchem
-      shell: pwsh
-      run: |
-        scripts/alchem/clean_alchem_exports.ps1       
+        Invoke-Pester tests/test_recent_tos_recipes.ps1 tests/testdata/2023-05-13-AlertBook.csv -Passthru     
