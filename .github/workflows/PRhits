@@ -1,0 +1,18 @@
+name: Get recent recipe hits
+on: 
+  pull_request: 
+  workflow_dispatch:
+
+jobs:
+  get-hits:
+    name: Recipe / Moses hits
+    runs-on: ubuntu-latest
+    steps:
+    - name: Run the recent_recipes_from_tos.ps1 script
+      shell: pwsh
+      run: |
+        scripts/tos/recent_recipes_from_tos.ps1
+    - name: Clean Up and Down recipe exports from Alchem
+      shell: pwsh
+      run: |
+        scripts/alchem/clean_alchem_exports.ps1   
