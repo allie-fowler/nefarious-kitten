@@ -16,7 +16,3 @@ jobs:
       shell: pwsh
       run: |
         scripts/tos/recent_recipes_from_tos.ps1
-    - name: Clean Up and Down recipe exports from Alchem
-      shell: pwsh
-      run: |
-        scripts/alchem/clean_alchem_exports.ps1   
