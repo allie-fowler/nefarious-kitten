@@ -1,4 +1,4 @@
-name: Get recent recipe hits
+name: Get recent ToS recipe hits
 on: 
   pull_request: 
   workflow_dispatch:
@@ -8,6 +8,10 @@ jobs:
     name: Recipe / Moses hits
     runs-on: ubuntu-latest
     steps:
+    - name: Check out repository code
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
     - name: Run the recent_recipes_from_tos.ps1 script
       shell: pwsh
       run: |
