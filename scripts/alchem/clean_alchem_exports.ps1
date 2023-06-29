@@ -1,4 +1,4 @@
-# Get the recipesUP SYM file in the input directory
+# Get the recipeUP SYM file in the input directory
 
 param (
     [string]$inputFile = ""
@@ -6,14 +6,13 @@ param (
 
 # Check if the input file parameter is empty
 if ([string]::IsNullOrEmpty($InputFile)) {
-    $inputFile = Get-ChildItem -Path . -Filter "input/recipe*UP.sym" | Select-Object -First 1
+    $inputFile = Get-ChildItem -Path "./input" -Filter "recipe*UP.sym" | Select-Object -First 1
 }
 
 # Check if a matching file was found
 if ($inputFile) {
-    # Use the file as  input
-    # $inputFile.FullName contains the full path to the file
-    Write-Host "Using file: $($inputFile)"    
+    # Use the file as input
+    Write-Host "Using file: $($inputFile.FullName)"
     
     # Retrieve the file's modify date
     $fileCreationDate = (Get-Item $inputFile.FullName).LastWriteTime.ToString()
