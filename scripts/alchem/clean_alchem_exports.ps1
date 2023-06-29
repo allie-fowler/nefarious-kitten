@@ -13,7 +13,7 @@ if ($inputFile) {
     Write-Host "File Modify Date: $fileCreationDate"
 
     # Find dates in the specified range, grab stock symbols and recipe type
-    $symbols = Get-Content -Path $inputFile.FullName | ForEach-Object { $_.Trim() } | Sort-Object -Unique
+    $symbols = Get-Content -Path $inputFile.FullName | ForEach-Object { $_.TrimStart('=') } | Sort-Object -Unique
     $symbolString = $symbols -join ", "
 } 
 
