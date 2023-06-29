@@ -1,15 +1,9 @@
-# Get the recipeUP SYM file in the input directory
+# Get the recipeUP or recipesUP SYM file in the input directory
 
-param (
-    [string]$inputFile = ""
-)
+# Check if a matching file exists
+$inputFile = Get-ChildItem -Path "./input" -Filter "recipe*UP.sym" | Select-Object -First 1
 
-# Check if the input file parameter is empty
-if ([string]::IsNullOrEmpty($InputFile)) {
-    $inputFile = Get-ChildItem -Path "./input" -Filter "recipe*UP.sym" | Select-Object -First 1
-}
-
-# Check if a matching file was found
+# If a file was found, use it as input
 if ($inputFile) {
     # Use the file as input
     Write-Host "Using file: $($inputFile.FullName)"
