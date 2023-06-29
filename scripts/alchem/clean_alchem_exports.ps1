@@ -1,32 +1,43 @@
-# Get the recipeUP or recipesUP SYM file in the input directory
+# Define the file patterns to search for
+$filePatterns = @("recipe*UP.sym", "recipe*DOWN.sym")
 
-# Check if a matching file exists
-$inputFile = Get-ChildItem -Path "./input" -Filter "recipe*UP.sym" | Select-Object -First 1
-
-# If a file was found, use it as input
-if ($inputFile) {
-    # Use the file as input
-    Write-Host "Using file: $($inputFile.FullName)"
-    
-    # Retrieve the file's modify date
-    $fileCreationDate = (Get-Item $inputFile.FullName).LastWriteTime.ToString()
-    Write-Host "File Modify Date: $fileCreationDate"
-
-    # Find dates in the specified range, grab stock symbols and recipe type
-    $symbols = Get-Content -Path $inputFile.FullName | ForEach-Object { $_.TrimStart('=') } | Where-Object { $_ -ne "" } | Sort-Object -Unique
-    $symbolString = $symbols -join ", "
-} 
-
+# Initialize an empty hashtable to store the symbols
 $watchlist = @{
     name = "mywatchlist"
-    watchlistItems = @(
-        @{
-            symbol = $symbolString
-        }
-    )
+    watchlistItems = @()
 }
 
-Write-Host "UP recipes: $($watchlist.watchlistItems[0].symbol)"
+# Iterate over the file patterns
+foreach ($filePattern in $filePatterns) {
+    # Check if a matching file exists
+    $inputFile = Get-ChildItem -Path "./input" -Filter $filePattern | Select-Object -First 1
+
+    # If a file was found, use it as input
+    if ($inputFile) {
+        # Use the file as input
+        Write-Host "Using file: $($inputFile.FullName)"
+        
+        # Retrieve the file's modify date
+        $fileCreationDate = (Get-Item $inputFile.FullName).LastWriteTime.ToString()
+        Write-Host "File Modify Date: $fileCreationDate"
+
+        # Find dates in the specified range, grab stock symbols and recipe type
+        $symbols = Get-Content -Path $inputFile.FullName | ForEach-Object { $_.TrimStart('=') } | Where-Object { $_ -ne "" } | Sort-Object -Unique
+        $symbolString = $symbols -join ", "
+
+        # Add the symbol string to the watchlist hashtable
+        $watchlistItem = @{
+            symbol = $symbolString
+        }
+        $watchlist.watchlistItems += $watchlistItem
+    }
+}
+
+# Output the results
+foreach ($item in $watchlist.watchlistItems) {
+    Write-Host "Recipes: $($item.symbol)"
+}
+
 
 #$json = $watchlist | ConvertTo-Json
 #$headers = @{
