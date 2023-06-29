@@ -13,14 +13,15 @@ if ($inputFile) {
     Write-Host "File Modify Date: $fileCreationDate"
 
     # Find dates in the specified range, grab stock symbols and recipe type
-    $symbols = Get-Content -Path $inputFile.FullName | ForEach-Object { $_.Trim() } | Sort-Object -Unique -Join ", "
+    $symbols = Get-Content -Path $inputFile.FullName | ForEach-Object { $_.Trim() } | Sort-Object -Unique
+    $symbolString = $symbols -join ", "
 } 
 
 $watchlist = @{
     name = "mywatchlist"
     watchlistItems = @(
         @{
-            symbol = $symbols
+            symbol = $symbolString
         }
     )
 }
