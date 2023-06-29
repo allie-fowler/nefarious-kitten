@@ -13,28 +13,27 @@ if ([string]::IsNullOrEmpty($InputFile)) {
 if ($inputFile) {
     # Use the file as  input
     # $inputFile.FullName contains the full path to the file
-    Write-Host "Using file: $($inputFile)"
+    Write-Host "Using file: $($inputFile)"    
     
+    # Retrieve the file's modify date
+    $fileCreationDate = (Get-Item $inputFile.FullName).LastWriteTime.ToString()
     Write-Host "File Modify Date: $fileCreationDate"
 
-    $datenow = Get-Date -Format "MMddyyyy-HHmmss"
-    $DaysAgo = (Get-Date).AddDays($lookBack)
-    $regex = "\b[A-Z]{1,4}\b"
-
     # Find dates in the specified range, grab stock symbols and recipe type
-    $symbols = Get-Content -Path $inputFile | Sort-Object -Unique | Out-String
+    $symbols = Get-Content -Path $inputFile.FullName | ForEach-Object { $_.Trim() } | Sort-Object -Unique -Join ", "
 } 
 
 $watchlist = @{
     name = "mywatchlist"
     watchlistItems = @(
         @{
-            symbol = "$symbols"
+            symbol = $symbols
         }
     )
 }
 
-Write-Host "UP recipes: $watchlist"
+Write-Host "UP recipes: $($watchlist.watchlistItems[0].symbol)"
+
 #$json = $watchlist | ConvertTo-Json
 #$headers = @{
 #    Authorization = "Bearer <access_token>"
