@@ -25,9 +25,13 @@ foreach ($filePattern in $filePatterns) {
         $symbols = Get-Content -Path $inputFile.FullName | ForEach-Object { $_.TrimStart('=') } | Where-Object { $_ -ne "" } | Sort-Object -Unique
         $symbolString = $symbols -join ", "
 
-        # Add the symbol string to the watchlist hashtable
+        # Determine the recipe label based on the filename
+        $recipeLabel = if ($filePattern -like "*UP*") { "UP" } else { "DOWN" }
+
+        # Add the symbol string with the corresponding recipe label to the watchlist hashtable
         $watchlistItem = @{
             symbol = $symbolString
+            recipeType = $recipeLabel
         }
         $watchlist.watchlistItems += $watchlistItem
     }
@@ -35,9 +39,8 @@ foreach ($filePattern in $filePatterns) {
 
 # Output the results
 foreach ($item in $watchlist.watchlistItems) {
-    Write-Host "Recipes: $($item.symbol)"
+    Write-Host "Recipes $($item.recipeType): $($item.symbol)"
 }
-
 
 #$json = $watchlist | ConvertTo-Json
 #$headers = @{
