@@ -22,7 +22,7 @@ if ($inputFile) {
     $regex = "\b[A-Z]{1,4}\b"
 
     # Find dates in the specified range, grab stock symbols and recipe type
-    $symbols = Get-Content -Path $inputFile Sort-Object -Unique | Out-String
+    $symbols = Get-Content -Path $inputFile | Sort-Object -Unique | Out-String
 } 
 
 $watchlist = @{
