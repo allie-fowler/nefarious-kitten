@@ -29,17 +29,23 @@ if ($inputFile) {
     $symbolsList = Get-Content -Path $inputFile | Select-Object -Skip 4 | ForEach-Object {
         $fields = $_ -split ','
         if ($fields.Count -ge 7) {
-            $date = [datetime]::ParseExact($fields[0], "M/d/yy H:mm:ss", $null).Date
-            if ($date -ge $DaysAgo) {
-                if ($fields[2] -match $regex) {
-                    $stockSymbol = $matches[0]
-                    if ($fields[2] -match "\(3 Days\)") {
-                        "{0,-6} {1,-8} {2}" -f $stockSymbol, "Moses", $date.ToString("MM/dd/yyyy")
-                    }
-                    elseif ($fields[2] -match "\(Day\)") {
-                        "{0,-6} {1,-8} {2}" -f $stockSymbol, "Recipe", $date.ToString("MM/dd/yyyy")
+            try {
+                $date = [datetime]::ParseExact($fields[0], "M/d/yy H:mm:ss", $null).Date
+                if ($date -ge $DaysAgo) {
+                    if ($fields[2] -match $regex) {
+                        $stockSymbol = $matches[0]
+                        if ($fields[2] -match "\(3 Days\)") {
+                            "{0,-6} {1,-8} {2}" -f $stockSymbol, "Moses", $date.ToString("MM/dd/yyyy")
+                        }
+                        elseif ($fields[2] -match "\(Day\)") {
+                            "{0,-6} {1,-8} {2}" -f $stockSymbol, "Recipe", $date.ToString("MM/dd/yyyy")
+                        }
                     }
                 }
+            }
+            catch {
+                # Ignore the line if the date cannot be parsed
+                continue
             }
         }
     } | Sort-Object -Unique
