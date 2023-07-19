@@ -26,7 +26,10 @@ if ($inputFile) {
     $DaysAgo = (Get-Date).AddDays($lookBack).Date
 
     # Find dates in the specified range, grab stock symbols and recipe type
-    $symbolsList = Get-Content -Path $inputFile | ForEach-Object {
+    $symbolsHashtable = @{}
+    $regex = "\b[A-Z]{1,4}\b"
+
+    Get-Content -Path $inputFile | ForEach-Object {
         if ($_ -match "^\d{1,2}/\d{1,2}/\d{2}") {
             $fields = $_ -split ','
             if ($fields.Count -ge 7) {
@@ -36,10 +39,10 @@ if ($inputFile) {
                         if ($fields[2] -match $regex) {
                             $stockSymbol = $matches[0]
                             if ($fields[2] -match "\(3 Days\)") {
-                                "{0,-6} {1,-8} {2}" -f $stockSymbol, "Moses", $date.ToString("MM/dd/yyyy")
+                                $symbolsHashtable["$stockSymbol Moses"] = $date
                             }
                             elseif ($fields[2] -match "\(Day\)") {
-                                "{0,-6} {1,-8} {2}" -f $stockSymbol, "Recipe", $date.ToString("MM/dd/yyyy")
+                                $symbolsHashtable["$stockSymbol Recipe"] = $date
                             }
                         }
                     }
@@ -50,13 +53,9 @@ if ($inputFile) {
                 }
             }
         }
-    } | Sort-Object -Unique
+    }
 
-    # Output the list to a window"
-    $symbolsList | Out-String | Write-Host
-
-}
-else {
-    # Throw an error if no CSV file is found
-    throw "No CSV file found in the current directory."
-}
+    # Output the list to a window
+    $sortedSymbolsList = $symbolsHashtable.GetEnumerator() | Sort-Object Value | ForEach-Object {
+        $stockRecipe = $_.Name -split ' '
+        "{0,-6} {1,-8} {2}" -f $stockRecipe[0], $stockRecipe
