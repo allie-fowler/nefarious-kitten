@@ -36,4 +36,27 @@ if ($inputFile) {
                         if ($fields[2] -match $regex) {
                             $stockSymbol = $matches[0]
                             if ($fields[2] -match "\(3 Days\)") {
-                                "{0,-6} {1,-8} {
+                                "{0,-6} {1,-8} {2}" -f $stockSymbol, "Moses", $date.ToString("MM/dd/yyyy")
+                            }
+                            elseif ($fields[2] -match "\(Day\)") {
+                                "{0,-6} {1,-8} {2}" -f $stockSymbol, "Recipe", $date.ToString("MM/dd/yyyy")
+                            }
+                        }
+                    }
+                }
+                catch {
+                    # Ignore the line if the date cannot be parsed
+                    continue
+                }
+            }
+        }
+    } | Sort-Object -Unique
+
+    # Output the list to a window"
+    $symbolsList | Out-String | Write-Host
+
+}
+else {
+    # Throw an error if no CSV file is found
+    throw "No CSV file found in the current directory."
+}
