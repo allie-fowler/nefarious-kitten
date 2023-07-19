@@ -22,33 +22,30 @@ if ($inputFile) {
     # Number of days back to collect symbols
     $lookBack = -7
 
-    $datenow = Get-Date -Format "MMddyyyy-HHmmss"
-    $DaysAgo = (Get-Date).AddDays($lookBack)
-    $regex = "\b[A-Z]{1,4}\b"
+    $datenow = Get-Date -Format "MMddyyyy"
+    $DaysAgo = (Get-Date).AddDays($lookBack).Date
 
     # Find dates in the specified range, grab stock symbols and recipe type
-    $symbolsList = Get-Content -Path $inputFile | ForEach-Object {
+    $symbolsList = Get-Content -Path $inputFile | Select-Object -Skip 4 | ForEach-Object {
         $fields = $_ -split ','
-        if ($fields[0] -as [datetime]) {
-            $date = [datetime]::ParseExact($fields[0], "M/d/yy H:mm:ss", $null)
+        if ($fields.Count -ge 7) {
+            $date = [datetime]::ParseExact($fields[0], "M/d/yy", $null).Date
             if ($date -ge $DaysAgo) {
                 if ($fields[2] -match $regex) {
                     $stockSymbol = $matches[0]
                     if ($fields[2] -match "\(3 Days\)") {
-                        Write-Output "$fields[0]	$stockSymbol		Moses"
+                        "{0,-6} {1,-8} {2}" -f $stockSymbol, "Moses", $date.ToString("MM/dd/yyyy")
                     }
                     elseif ($fields[2] -match "\(Day\)") {
-                        Write-Output "$fields[0]	$stockSymbol		Recipe"
+                        "{0,-6} {1,-8} {2}" -f $stockSymbol, "Recipe", $date.ToString("MM/dd/yyyy")
                     }
                 }
             }
         }
-    } | Sort-Object -Unique | Out-String
+    } | Sort-Object -Unique
 
     # Output the list to a window"
-    #$wshell = New-Object -ComObject Wscript.Shell
-    #$Output = $wshell.Popup($symbolsList,0,"header",0+64)
-    Write-Host "$symbolsList"
+    $symbolsList | Out-String | Write-Host
 
 }
 else {
