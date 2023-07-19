@@ -29,7 +29,7 @@ if ($inputFile) {
     $symbolsList = Get-Content -Path $inputFile | Select-Object -Skip 4 | ForEach-Object {
         $fields = $_ -split ','
         if ($fields.Count -ge 7) {
-            $date = [datetime]::ParseExact($fields[0], "M/d/yy", $null).Date
+            $date = [datetime]::ParseExact($fields[0], "M/d/yy H:mm:ss", $null).Date
             if ($date -ge $DaysAgo) {
                 if ($fields[2] -match $regex) {
                     $stockSymbol = $matches[0]
