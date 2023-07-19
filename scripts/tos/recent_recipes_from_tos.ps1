@@ -34,7 +34,7 @@ if ($inputFile) {
             $fields = $_ -split ','
             if ($fields.Count -ge 7) {
                 try {
-                    $date = [datetime]::ParseExact($fields[0], "M/d/yy H:mm:ss", $null)
+                    $date = [datetime]::ParseExact($fields[0], "M/d/yy H:mm:ss", $null).Date
                     if ($date -ge $DaysAgo) {
                         if ($fields[2] -match $regex) {
                             $stockSymbol = $matches[0]
@@ -56,7 +56,7 @@ if ($inputFile) {
     }
 
     # Output the list to a window
-    $sortedSymbolsList = $symbolsHashtable.GetEnumerator() | Sort-Object Value | ForEach-Object {
+    $sortedSymbolsList = $symbolsHashtable.GetEnumerator() | Sort-Object Name | ForEach-Object {
         $stockRecipe = $_.Name -split ' '
         "{0,-6} {1,-8} {2}" -f $stockRecipe[0], $stockRecipe[1], $_.Value.ToString("MM/dd/yyyy")
     }
