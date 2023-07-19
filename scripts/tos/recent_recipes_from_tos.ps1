@@ -30,11 +30,11 @@ if ($inputFile) {
     $regex = "\b[A-Z]{1,4}\b"
 
     Get-Content -Path $inputFile | ForEach-Object {
-        if ($_ -match "^\d{1,2}/\d{1,2}/\d{2}") {
+        if ($_ -match "^\d{1,2}/\d{1,2}/\d{2} \d{1,2}:\d{1,2}:\d{1,2}") {
             $fields = $_ -split ','
             if ($fields.Count -ge 7) {
                 try {
-                    $date = [datetime]::ParseExact($fields[0], "M/d/yy H:mm:ss", $null).Date
+                    $date = [datetime]::ParseExact($fields[0], "M/d/yy H:mm:ss", $null)
                     if ($date -ge $DaysAgo) {
                         if ($fields[2] -match $regex) {
                             $stockSymbol = $matches[0]
@@ -58,4 +58,13 @@ if ($inputFile) {
     # Output the list to a window
     $sortedSymbolsList = $symbolsHashtable.GetEnumerator() | Sort-Object Value | ForEach-Object {
         $stockRecipe = $_.Name -split ' '
-        "{0,-6} {1,-8} {2}" -f $stockRecipe[0], $stockRecipe
+        "{0,-6} {1,-8} {2}" -f $stockRecipe[0], $stockRecipe[1], $_.Value.ToString("MM/dd/yyyy")
+    }
+
+    $sortedSymbolsList | Out-String | Write-Host
+
+}
+else {
+    # Throw an error if no CSV file is found
+    throw "No CSV file found in the current directory."
+}
