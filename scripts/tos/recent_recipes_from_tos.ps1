@@ -14,7 +14,7 @@ if ($inputFile) {
     # Use the file as your input
     # $inputFile.FullName contains the full path to the file
     Write-Host "Using file: $($inputFile)"
-    
+
     Write-Host "File Modify Date: $fileCreationDate"
     Write-Host "Current Date: $currentDate"
 
@@ -22,36 +22,49 @@ if ($inputFile) {
     # Number of days back to collect symbols
     $lookBack = -7
 
-    $datenow = Get-Date -Format "MMddyyyy-HHmmss"
-    $DaysAgo = (Get-Date).AddDays($lookBack)
-    $regex = "\b[A-Z]{1,4}\b"
+    $datenow = Get-Date -Format "MMddyyyy"
+    $DaysAgo = (Get-Date).AddDays($lookBack).Date
 
     # Find dates in the specified range, grab stock symbols and recipe type
-    $symbolsList = Get-Content -Path $inputFile | ForEach-Object {
-    if ($_ -match "\b(\d{1,2}/\d{1,2}/\d{2})\b") {
-        $date = [datetime]::ParseExact($matches[1], "M/d/yy", $null)
-        if ($date -ge $DaysAgo) {
-            if ($_ -match $regex) {
-                $stockSymbol = $matches[0]
-                if ($_ -match "\(3 Days\)") {
-                    Write-Output "$stockSymbol		 Moses"
+    $symbolsHashtable = @{}
+    $regex = "\b[A-Z]{1,4}\b"
+
+    Get-Content -Path $inputFile | ForEach-Object {
+        if ($_ -match "^\d{1,2}/\d{1,2}/\d{2} \d{1,2}:\d{1,2}:\d{1,2}") {
+            $fields = $_ -split ','
+            if ($fields.Count -ge 7) {
+                try {
+                    $date = [datetime]::ParseExact($fields[0], "M/d/yy H:mm:ss", $null).Date
+                    if ($date -ge $DaysAgo) {
+                        if ($fields[2] -match $regex) {
+                            $stockSymbol = $matches[0]
+                            if ($fields[2] -match "\(3 Days\)") {
+                                $symbolsHashtable["$stockSymbol Moses"] = $date
+                            }
+                            elseif ($fields[2] -match "\(Day\)") {
+                                $symbolsHashtable["$stockSymbol Recipe"] = $date
+                            }
+                        }
+                    }
                 }
-                elseif ($_ -match "\(Day\)") {
-                    Write-Output "$stockSymbol		 Recipe"
+                catch {
+                    # Ignore the line if the date cannot be parsed
+                    continue
                 }
             }
         }
     }
-} | Sort-Object -Unique | Out-String
 
-# Output the list to a window"
-#$wshell = New-Object -ComObject Wscript.Shell
-#$Output = $wshell.Popup($symbolsList,0,"header",0+64)
-Write-Host "$symbolsList"
+    # Output the list to a window
+    $sortedSymbolsList = $symbolsHashtable.GetEnumerator() | Sort-Object Name | ForEach-Object {
+        $stockRecipe = $_.Name -split ' '
+        "{0,-6} {1,-8} {2}" -f $stockRecipe[0], $stockRecipe[1], $_.Value.ToString("MM/dd/yyyy")
+    }
+
+    $sortedSymbolsList | Out-String | Write-Host
 
 }
 else {
     # Throw an error if no CSV file is found
     throw "No CSV file found in the current directory."
 }
-
