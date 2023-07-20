@@ -32,7 +32,7 @@ if ($inputFile) {
         $date = $fields[0].Trim()
         $stockSymbol = $fields[1].Trim()
 
-        if ([DateTime]::TryParseExact($date, "M/d/yy H:mm:ss", $null, [System.Globalization.DateTimeStyles]::None, [ref]$dateParsed) -and $dateParsed.Value.Date -ge $dateRangeStart) {
+        if ([DateTime]::TryParseExact($date, "M/d/yy H:mm:ss", $null, [System.Globalization.DateTimeStyles]::None, [ref]$null) -and $dateParsed.Date -ge $dateRangeStart) {
             $recipeType = $fields[2].Trim()
 
             if ($recipeType -eq "(3 Days)") {
