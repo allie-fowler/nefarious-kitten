@@ -22,33 +22,43 @@ if ($inputFile) {
     # Number of days back to collect symbols
     $lookBack = -7
 
-    $dateRangeStart = (Get-Date).AddDays($lookBack).Date
+    $datenow = Get-Date -Format "MMddyyyy"
+    $DaysAgo = (Get-Date).AddDays($lookBack).Date
+
+    # Find dates in the specified range, grab stock symbols and recipe type
     $symbolsHashtable = @{}
-    $stockSymbols = [System.Collections.Generic.HashSet[string]]::new()
-    $csvDelimiter = ','
+    $regex = "\b[A-Z]{1,4}\b"
 
-    Get-Content -Path $inputFile | Select-Object -Skip 4 | ForEach-Object {
-        $fields = $_ -split $csvDelimiter
-        $date = $fields[0].Trim()
-        $stockSymbol = $fields[1].Trim()
-
-        if ($date -match '^\d{1,2}/\d{1,2}/\d{2}') {
-            $dateParsed = [DateTime]::ParseExact($date, "M/d/yy H:mm:ss", $null)
-            if ($dateParsed.Date -ge $dateRangeStart) {
-                $recipeType = $fields[2].Trim()
-
-                if ($recipeType -eq "(3 Days)") {
-                    $stockSymbols.Add("$stockSymbol Moses")
-                } elseif ($recipeType -eq "(Day)") {
-                    $stockSymbols.Add("$stockSymbol Recipe")
+    Get-Content -Path $inputFile | ForEach-Object {
+        if ($_ -match "^\d{1,2}/\d{1,2}/\d{2} \d{1,2}:\d{1,2}:\d{1,2}") {
+            $fields = $_ -split ','
+            if ($fields.Count -ge 7) {
+                try {
+                    $date = [datetime]::ParseExact($fields[0], "M/d/yy H:mm:ss", $null).Date
+                    if ($date -ge $DaysAgo) {
+                        if ($fields[2] -match $regex) {
+                            $stockSymbol = $matches[0]
+                            if ($fields[2] -match "\(3 Days\)") {
+                                $symbolsHashtable["$stockSymbol Moses"] = $date
+                            }
+                            elseif ($fields[2] -match "\(Day\)") {
+                                $symbolsHashtable["$stockSymbol Recipe"] = $date
+                            }
+                        }
+                    }
+                }
+                catch {
+                    # Ignore the line if the date cannot be parsed
+                    continue
                 }
             }
         }
     }
 
     # Output the list to a window
-    $sortedSymbolsList = $stockSymbols | Sort-Object | ForEach-Object {
-        "{0,-6} {1,-8} {2}" -f $_.Split(' ')[0], $_.Split(' ')[1], $dateRangeStart.ToString("MM/dd/yyyy")
+    $sortedSymbolsList = $symbolsHashtable.GetEnumerator() | Sort-Object Name | ForEach-Object {
+        $stockRecipe = $_.Name -split ' '
+        "{0,-6} {1,-8} {2}" -f $stockRecipe[0], $stockRecipe[1], $_.Value.ToString("MM/dd/yyyy")
     }
 
     $sortedSymbolsList | Out-String | Write-Host
