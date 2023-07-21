@@ -2,6 +2,10 @@ name: Get recent ToS recipe hits
 on: 
   pull_request: 
   workflow_dispatch:
+  push:
+    paths:
+      - 'input/*AlertBook.csv'
+      - 'tos/recent_recipes_from_tos.ps1'
 
 jobs:
   get-hits:
