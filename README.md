@@ -16,7 +16,7 @@ In this Github repo:
 * Upload your exported Alerts file by clicking "Add File" and then dragging or choosing your previously downloaded Alerts file.
 * Click "Commit changes"
 
-Process the input file:
+See the output:
 * Click "Actions"
 * Click "Get Recent Tos recipe hits" on the left
 * In the list of "green checkmark" runs, the top item should be VERY recent like "now" or "1 minute ago".  Click the item.
