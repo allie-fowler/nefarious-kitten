@@ -19,11 +19,7 @@ In this Github repo:
 Process the input file:
 * Click "Actions"
 * Click "Get Recent Tos recipe hits" on the left
-* Click "Run Workflow" on the right
-* Under "Use workflow from" select the name of the branch you created above
-* It may take 15 seconds or so before you see evidence of it running
-* AFter it runs for another 15-30 seconds, there should be a new green checkmark in the list with a timestamp of "now"
-* Click the name, "Get Recent ToS recipe hits"
+* In the list of "green checkmark" runs, the top item should be VERY recent like "now" or "1 minute ago".  Click the item.
 * Click the green checkmark labelled "Recipe / Moses hits"
 * Click the drop-down arrow labelled "Run the recent_recipes_from_ToS.ps1" script
 
