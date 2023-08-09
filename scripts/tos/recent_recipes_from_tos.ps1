@@ -6,16 +6,14 @@ param (
 
 # Check if the input file parameter is empty
 if ([string]::IsNullOrEmpty($InputFile)) {
-    $inputFile = Get-ChildItem -Path . -Filter "input/*AlertBook.csv" | Select-Object -First 1
+    $inputFile = Get-ChildItem -Path . -Filter "input/*AlertBook.csv" | Select-Object -Last 1
 }
 
 # Check if a matching file was found
 if ($inputFile) {
     # Use the file as your input
     # $inputFile.FullName contains the full path to the file
-    Write-Host "Using file: $($inputFile)"
-
-    Write-Host "File Modify Date: $fileCreationDate"
+    Write-Host "Using input file: $($inputFile)"
     Write-Host "Current Date: $currentDate"
 
     # Rest of your script using $inputFile.FullName
