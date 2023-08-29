@@ -13,25 +13,19 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
       
-    - name: List matching files
-      id: list-files
-      run: |
-        shopt -s nullglob
-        files=("/input/*-AlertBook.csv")
-        echo "::set-output name=files::${files[*]}"
-      
-    - name: Determine files to delete
-      id: delete-files
-      run: |
-        IFS=$'\n' read -r -d '' -a all_files <<< "${{ steps.list-files.outputs.files }}"
-        sorted_files=($(printf "%s\n" "${all_files[@]}" | sort))
-        files_to_delete=("${sorted_files[@]::${#sorted_files[@]}-1}")
-        echo "::set-output name=files_to_delete::${files_to_delete[*]}"
-      
     - name: Delete old files
       run: |
-        IFS=$'\n' read -r -d '' -a files <<< "${{ steps.delete-files.outputs.files_to_delete }}"
-        for file in "${files[@]}"; do
-          echo "Deleting: $file"
-          # rm "$file"
-        done
+        find input -maxdepth 1 -type f -name '*-AlertBook.csv' -printf "%T@ %p\n" |
+          sort -n | head -n -1 | cut -d ' ' -f 2- |
+          while IFS= read -r file; do
+            echo "Deleting: $file"
+            #rm "$file"
+          done
+
+    - name: Commit changes
+      run: |
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
+        git add -A
+        git commit -m "Cleanup: Remove old files"
+        git push
