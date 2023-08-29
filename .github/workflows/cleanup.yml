@@ -3,7 +3,7 @@ name: Weekly Cleanup
 on:
   schedule:
     - cron: "0 0 * * 0"  # Runs every Sunday at midnight
-  repository_dispatch:
+  workflow_dispatch:
 
 jobs:
   cleanup:
