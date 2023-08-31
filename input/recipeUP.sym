@@ -1,33 +1,24 @@
-=$OEX
 =$RUT
-=AAPL
 =ABNB
-=ACN
-=CAT
+=BA
 =CF
 =COST
 =DE
 =FDX
 =GH
 =ILMN
-=ISRG
-=KMB
 =LABU
 =LVS
 =MCD
-=MDB
 =NAIL
 =NFLX
+=NOC
 =NOW
 =NSC
-=PANW
 =PAYX
-=PEN
 =PSA
-=PYPL
 =RETL
 =SHW
-=SOXL
 =SQ
 =STZ
 =TNA
@@ -35,7 +26,15 @@
 =TTD
 =UNH
 =WYNN
-=ZM
+
+
+
+
+
+
+
+
+
 
 
 
