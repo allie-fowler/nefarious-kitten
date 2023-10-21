@@ -4,52 +4,33 @@
 =DRN
 =IYT
 =LABU
-=LMT
 =MCD
 =NAIL
-=ORLY
-=PAYX
-=PSA
 =RETL
-=SOXL
 =# RECIPE
-=$OEX
 =$RUT
+=AAP
 =ABNB
 =ACN
-=ADBE
 =ALB
-=ASML
 =BA
 =CAT
-=CF
-=CURE
-=GH
+=FDX
 =HD
-=ILMN
-=KMB
-=LULU
-=MDB
-=MSFT
+=ISRG
 =NAIL
-=NOC
-=NOW
-=NSC
+=PEN
 =PYPL
 =SHW
-=SQ
-=TDOC
-=TTD
-=MCD
+=STZ
 =TWLO
 =URI
 =# ----- TO REVIEW ---
+=BKNG
+=BX
 =TNA
-=KMB
-=LMT
-=LULU
-=STZ
-=URI
+=TTD
+=WSO
 
 
 
@@ -165,6 +146,25 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=FDX
 
 
 
