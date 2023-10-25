@@ -1,5 +1,7 @@
 =# MOSES / 3-DAY
 =AAP
+=ALB
+=BKNG
 =DE
 =DRN
 =IYT
@@ -12,8 +14,8 @@
 =AAP
 =ABNB
 =ACN
-=ALB
 =BA
+=BX
 =CAT
 =FDX
 =HD
@@ -22,23 +24,18 @@
 =PEN
 =PYPL
 =SHW
+=SOXL
 =STZ
 =TWLO
 =URI
+=WSO
 =# ----- TO REVIEW ---
-=BKNG
-=BX
+=MKL
+=NSC
+=PSA
+=SPWR
 =TNA
 =TTD
-=WSO
-
-
-
-
-
-
-
-
 
 
 
@@ -165,6 +162,9 @@
 
 
 =FDX
+
+
+
 
 
 
