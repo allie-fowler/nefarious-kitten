@@ -1,47 +1,52 @@
 =# MOSES / 3-DAY
 =AAP
+=ACN
 =ALB
 =BKNG
 =DE
 =DRN
+=GS
 =IYT
 =LABU
 =MCD
 =NAIL
 =RETL
+=SOXL
+=STZ
 =# RECIPE
 =$RUT
+=$RUT
 =AAP
+=AAPL
 =ABNB
 =ACN
 =BA
 =BX
 =CAT
+=COST
+=CURE
 =FDX
 =HD
 =ISRG
 =NAIL
+=NSC
+=NVDA
+=PAYX
 =PEN
+=PSA
 =PYPL
 =SHW
 =SOXL
 =STZ
+=TTD
 =TWLO
 =URI
 =WSO
 =# ----- TO REVIEW ---
-=MKL
-=NSC
-=PSA
-=SPWR
+=$OEX
+=ANET
+=CF
 =TNA
-=TTD
-
-
-
-
-
-
 
 
 
@@ -162,6 +167,8 @@
 
 
 =FDX
+
+
 
 
 
