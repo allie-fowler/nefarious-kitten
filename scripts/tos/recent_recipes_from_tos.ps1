@@ -1,4 +1,5 @@
 # Get the first CSV file in the input directory
+Set-PSDebug -Trace
 
 param (
     [string]$inputFile = ""
