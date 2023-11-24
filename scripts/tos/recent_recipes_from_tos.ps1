@@ -58,8 +58,8 @@ if ($inputFile) {
     
     # Output the list to a window
     $sortedSymbolsList = $symbolsHashtable.GetEnumerator() | Sort-Object Name | ForEach-Object {
-        Write-Host ("The value of '$_' is: $($hash[$_])")  # For debug
         $stockRecipe = $_.Name -split ' '
+        Write-Host ("The value of '$_' is: $($hash[$_])")  # For debug
         if ($_ -like "*low*") {
             "{0,-6} {1,-8} {2} Up" -f $stockRecipe[0], $stockRecipe[1], $_.Value.ToString("MM/dd/yyyy")
         } elseif ($_ -like "*high*") {
