@@ -53,6 +53,8 @@ if ($inputFile) {
     }
 
     Set-PSDebug -Trace 2
+
+    Write-Host ("Before chunk 1, the list is " + $symbolsHashtable)
     
     # Output the list to a window
     $sortedSymbolsList = $symbolsHashtable.GetEnumerator() | Sort-Object Name | ForEach-Object {
