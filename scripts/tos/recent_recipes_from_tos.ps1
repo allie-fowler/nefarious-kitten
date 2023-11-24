@@ -41,6 +41,15 @@ if ($inputFile) {
                             elseif ($fields[2] -match "\(Day\)") {
                                 $symbolsHashtable["$stockSymbol Recipe"] = $date
                             }
+                            if ($fields[3] -like "*low*") {
+                                $symbolsHashtable["$stockSymbol Up"] = $date
+                            }
+                            elseif ($fields[3] -like "*high*") {
+                                $symbolsHashtable["$stockSymbol Down"] = $date
+                            }
+                            else  {
+                                $symbolsHashtable["$stockSymbol Undetermined"] = $date
+                            }
                         }
                     }
                 }
