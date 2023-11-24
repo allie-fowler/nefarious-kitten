@@ -1,6 +1,4 @@
 # Get the first CSV file in the input directory
-Set-PSDebug -Trace 2
-
 param (
     [string]$inputFile = ""
 )
@@ -54,6 +52,8 @@ if ($inputFile) {
         }
     }
 
+    Set-PSDebug -Trace 2
+    
     # Output the list to a window
     $sortedSymbolsList = $symbolsHashtable.GetEnumerator() | Sort-Object Name | ForEach-Object {
         $stockRecipe = $_.Name -split ' '
@@ -66,7 +66,7 @@ if ($inputFile) {
             "{0,-6} {1,-8} {2} Undetermined" -f $stockRecipe[0], $stockRecipe[1], $_.Value.ToString("MM/dd/yyyy")
         }
     }
-    
+
     
     $sortedSymbolsList = $symbolsHashtable.GetEnumerator() | Sort-Object Name | ForEach-Object {
         $stockRecipe = $_.Name -split ' '
