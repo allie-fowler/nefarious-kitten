@@ -67,6 +67,7 @@ if ($inputFile) {
         }
     }
 
+    Write-Host ("After chunk 1, the list is " + $sortedSymbolsList)
     
     $sortedSymbolsList = $symbolsHashtable.GetEnumerator() | Sort-Object Name | ForEach-Object {
         $stockRecipe = $_.Name -split ' '
