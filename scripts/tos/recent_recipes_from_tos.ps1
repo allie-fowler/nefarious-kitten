@@ -75,23 +75,23 @@ if ($inputFile) {
     }
     
     # Output the list to a window
-    $sortedSymbolsList = $symbolsHashtable.GetEnumerator() | Sort-Object Name | ForEach-Object {
-        $stockRecipe = $_.Name -split ' '
-        if ($_ -like "*low*") {
-            "{0,-6} {1,-8} {2} Up" -f $stockRecipe[0], $stockRecipe[1], $_.Value.ToString("MM/dd/yyyy")
-        } elseif ($_ -like "*high*") {
-            "{0,-6} {1,-8} {2} Down" -f $stockRecipe[0], $stockRecipe[1], $_.Value.ToString("MM/dd/yyyy")
-        }  
-        else {
-            "{0,-6} {1,-8} {2} Undetermined" -f $stockRecipe[0], $stockRecipe[1], $_.Value.ToString("MM/dd/yyyy")
-        }
-    }
+    #$sortedSymbolsList = $symbolsHashtable.GetEnumerator() | Sort-Object Name | ForEach-Object {
+    #    $stockRecipe = $_.Name -split ' '
+    #    if ($_ -like "*low*") {
+    #        "{0,-6} {1,-8} {2} Up" -f $stockRecipe[0], $stockRecipe[1], $_.Value.ToString("MM/dd/yyyy")
+    #    } elseif ($_ -like "*high*") {
+    #        "{0,-6} {1,-8} {2} Down" -f $stockRecipe[0], $stockRecipe[1], $_.Value.ToString("MM/dd/yyyy")
+    #    }  
+    #    else {
+    #        "{0,-6} {1,-8} {2} Undetermined" -f $stockRecipe[0], $stockRecipe[1], $_.Value.ToString("MM/dd/yyyy")
+    #    }
+    #}
 
     Write-Host ("After chunk 1, the list is " + $sortedSymbolsList)
     
     $sortedSymbolsList = $symbolsHashtable.GetEnumerator() | Sort-Object Name | ForEach-Object {
         $stockRecipe = $_.Name -split ' '
-        "{0,-6} {1,-8} {2}" -f $stockRecipe[0], $stockRecipe[1], $_.Value.ToString("MM/dd/yyyy")
+        "{0,-6} {1,-8} {2} {3}" -f $stockRecipe[0], $stockRecipe[1], $_.Value.ToString("MM/dd/yyyy")
     }
 
     $sortedSymbolsList | Out-String | Write-Host
