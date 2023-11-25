@@ -36,20 +36,26 @@ if ($inputFile) {
                         if ($fields[2] -match $regex) {
                             $stockSymbol = $matches[0]
                             if ($fields[2] -match "\(3 Days\)") {
-                                $symbolsHashtable["$stockSymbol Moses"] = $date
+                                $type = "Moses"
+                                #$symbolsHashtable["$stockSymbol Moses"] = $date
                             }
                             elseif ($fields[2] -match "\(Day\)") {
-                                $symbolsHashtable["$stockSymbol Recipe"] = $date
+                                $type = "Recipe"
+                                #$symbolsHashtable["$stockSymbol Recipe"] = $date
                             }
                             if ($fields[3] -like "*low*") {
-                                $symbolsHashtable["$stockSymbol Up"] = $date
+                                $direction = "Up"
+                                #$symbolsHashtable["$stockSymbol Up"] = $date
                             }
                             elseif ($fields[3] -like "*high*") {
-                                $symbolsHashtable["$stockSymbol Down"] = $date
+                                $direction = "Down"
+                                #$symbolsHashtable["$stockSymbol Down"] = $date
                             }
                             else  {
-                                $symbolsHashtable["$stockSymbol Undetermined"] = $date
+                                $direction = "Undetermined"
+                                #$symbolsHashtable["$stockSymbol Undetermined"] = $date
                             }
+                            #$symbolsHashtable["$stockSymbol $type $direction"] = $date
                         }
                     }
                 }
