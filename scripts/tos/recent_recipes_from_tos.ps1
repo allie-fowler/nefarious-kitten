@@ -67,9 +67,7 @@ if ($inputFile) {
         }
     }
 
-    Set-PSDebug -Trace 2
-  
-    Write-Host ("After chunk 1, the list is " + $sortedSymbolsList)
+    #Set-PSDebug -Trace 2
     
     $sortedSymbolsList = $symbolsHashtable.GetEnumerator() | Sort-Object Name | ForEach-Object {
         #$stockRecipe = $_.Name -split ' '
