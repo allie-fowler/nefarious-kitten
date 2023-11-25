@@ -91,7 +91,7 @@ if ($inputFile) {
     
     $sortedSymbolsList = $symbolsHashtable.GetEnumerator() | Sort-Object Name | ForEach-Object {
         $stockRecipe = $_.Name -split ' '
-        "{0,-6} {1,-8} {2}" -f $stockRecipe[0], $stockRecipe[1], $stockRecipe[2], $_.Value.ToString("MM/dd/yyyy")
+        "{0,-6} {1,-8} {2}" -f $stockRecipe[0], $stockRecipe[1], $_.Value.ToString("MM/dd/yyyy", $stockRecipe[2])
     }
 
     $sortedSymbolsList | Out-String | Write-Host
