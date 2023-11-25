@@ -74,15 +74,12 @@ if ($inputFile) {
     #    "{0,-6} {1,-8} {2,-6} {3}" -f $stockRecipe[0], $stockRecipe[1], $_.Value.ToString("MM/dd/yyyy"), $stockRecipe[2]
     #}
 
-    $sortedSymbolsList = $symbolsHashtable.GetEnumerator() | \
-      Sort-Object @{Expression={($_.Name -split ' ')[2]}; Ascending=$true}, @{Expression={($_.Name -split ' ')[0]}; Ascending=$true} | \
+    $sortedSymbolsList = $symbolsHashtable.GetEnumerator() | `
+      Sort-Object @{Expression={($_.Name -split ' ')[2]}; Ascending=$true}, @{Expression={($_.Name -split ' ')[0]}; Ascending=$true} | `
       ForEach-Object {
         $stockRecipe = $_.Name -split ' '
         "{0,-6} {1,-8} {2,-6} {3}" -f $stockRecipe[0], $stockRecipe[1], $_.Value.ToString("MM/dd/yyyy"), $stockRecipe[2]
     }
-
-$sortedSymbolsList | Out-String | Write-Host
-
 
     $sortedSymbolsList | Out-String | Write-Host
 
