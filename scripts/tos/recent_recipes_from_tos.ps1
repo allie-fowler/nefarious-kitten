@@ -13,7 +13,6 @@ if ($inputFile) {
     # Use the file as your input
     # $inputFile.FullName contains the full path to the file
     Write-Host "Using input file: $($inputFile)"
-    Write-Host "Current Date: $currentDate"
 
     # Rest of your script using $inputFile.FullName
     # Number of days back to collect symbols
@@ -68,11 +67,6 @@ if ($inputFile) {
     }
 
     #Set-PSDebug -Trace 2
-    
-    #$sortedSymbolsList = $symbolsHashtable.GetEnumerator() | Sort-Object Name | ForEach-Object {
-    #    $stockRecipe = $_.Name -split ' '
-    #    "{0,-6} {1,-8} {2,-6} {3}" -f $stockRecipe[0], $stockRecipe[1], $_.Value.ToString("MM/dd/yyyy"), $stockRecipe[2]
-    #}
 
     $sortedSymbolsList = $symbolsHashtable.GetEnumerator() | `
       Sort-Object @{Expression={($_.Name -split ' ')[2]}; Ascending=$true}, @{Expression={($_.Name -split ' ')[0]}; Ascending=$true} | `
