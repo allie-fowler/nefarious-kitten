@@ -1,5 +1,4 @@
 # Get the first CSV file in the input directory
-
 param (
     [string]$inputFile = ""
 )
@@ -37,11 +36,26 @@ if ($inputFile) {
                         if ($fields[2] -match $regex) {
                             $stockSymbol = $matches[0]
                             if ($fields[2] -match "\(3 Days\)") {
-                                $symbolsHashtable["$stockSymbol Moses"] = $date
+                                $type = "Moses"
+                                #$symbolsHashtable["$stockSymbol Moses"] = $date
                             }
                             elseif ($fields[2] -match "\(Day\)") {
-                                $symbolsHashtable["$stockSymbol Recipe"] = $date
+                                $type = "Recipe"
+                                #$symbolsHashtable["$stockSymbol Recipe"] = $date
                             }
+                            if ($fields[3] -like "*low*") {
+                                $direction = "Up"
+                                #$symbolsHashtable["$stockSymbol Up"] = $date
+                            }
+                            elseif ($fields[3] -like "*high*") {
+                                $direction = "Down"
+                                #$symbolsHashtable["$stockSymbol Down"] = $date
+                            }
+                            else  {
+                                $direction = "Undetermined"
+                                #$symbolsHashtable["$stockSymbol Undetermined"] = $date
+                            }
+                            $symbolsHashtable["$stockSymbol $type $direction"] = $date
                         }
                     }
                 }
@@ -53,10 +67,13 @@ if ($inputFile) {
         }
     }
 
-    # Output the list to a window
+    #Set-PSDebug -Trace 2
+    
     $sortedSymbolsList = $symbolsHashtable.GetEnumerator() | Sort-Object Name | ForEach-Object {
+        #$stockRecipe = $_.Name -split ' '
+        #"{0,-6} {1,-8} {2}" -f $stockRecipe[0], $stockRecipe[1], $_.Value.ToString("MM/dd/yyyy", $stockRecipe[2])
         $stockRecipe = $_.Name -split ' '
-        "{0,-6} {1,-8} {2}" -f $stockRecipe[0], $stockRecipe[1], $_.Value.ToString("MM/dd/yyyy")
+        "{0,-6} {1,-8} {2,-6} {3}" -f $stockRecipe[0], $stockRecipe[1], $_.Value.ToString("MM/dd/yyyy"), $stockRecipe[2]
     }
 
     $sortedSymbolsList | Out-String | Write-Host
