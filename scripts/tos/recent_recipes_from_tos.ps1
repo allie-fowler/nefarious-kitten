@@ -83,7 +83,7 @@ if ($inputFile) {
     #        "{0,-6} {1,-8} {2} Down" -f $stockRecipe[0], $stockRecipe[1], $_.Value.ToString("MM/dd/yyyy")
     #    }  
     #    else {
-    #        "{0,-6} {1,-8} {2} Undetermined" -f $stockRecipe[0], $stockRecipe[1], $_.Value.ToString("MM/dd/yyyy")
+    #        "{0,-6} {1,-8} {2} Undetermined" -f $stockRecipe[0], $stockRecipe[1], $stockRecipe[2], $_.Value.ToString("MM/dd/yyyy")
     #    }
     #}
 
@@ -91,7 +91,7 @@ if ($inputFile) {
     
     $sortedSymbolsList = $symbolsHashtable.GetEnumerator() | Sort-Object Name | ForEach-Object {
         $stockRecipe = $_.Name -split ' '
-        "{0,-6} {1,-8} {2}" -f $stockRecipe[0], $stockRecipe[1], $_.Value.ToString("MM/dd/yyyy")
+        "{0,-6} {1,-8} {2}" -f $stockRecipe[0], $stockRecipe[1], $stockRecipe[2], $_.Value.ToString("MM/dd/yyyy")
     }
 
     $sortedSymbolsList | Out-String | Write-Host
