@@ -55,7 +55,7 @@ if ($inputFile) {
                                 $direction = "Undetermined"
                                 #$symbolsHashtable["$stockSymbol Undetermined"] = $date
                             }
-                            #$symbolsHashtable["$stockSymbol $type $direction"] = $date
+                            $symbolsHashtable["$stockSymbol $type $direction"] = $date
                         }
                     }
                 }
