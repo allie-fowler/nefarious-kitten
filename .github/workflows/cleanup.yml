@@ -1,4 +1,6 @@
 name: Weekly Cleanup
+permissions:
+  contents: write
 
 on:
   schedule:
