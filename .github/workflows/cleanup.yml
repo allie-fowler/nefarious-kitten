@@ -19,13 +19,13 @@ jobs:
           sort -n | head -n -1 | cut -d ' ' -f 2- |
           while IFS= read -r file; do
             echo "Deleting: $file"
-            #rm "$file"
+            git rm "$file"
           done
 
     - name: Commit changes
       run: |
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
-        git add -A
-        git commit -m "Cleanup: Remove old files"
-        git push
+        git commit -m "Cleanup: Remove all but 1 latest input files"
+        git push https://${{ secrets.NEFKITTY_PAT }}@github.com/allie-fowler/nefarious-kitten.git HEAD:main
+  
