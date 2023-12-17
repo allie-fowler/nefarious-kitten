@@ -23,13 +23,13 @@ jobs:
         # If there are 1 or fewer files, exit the script
         if [ "$num_files" -le 1 ]; then
           echo "Exiting as there are 1 or fewer -AlertBook.csv files in the input directory."
-          echo "::set-output name=skip::true"
+          echo "skip=true" >> $GITHUB_ENV
         else
-          echo "::set-output name=skip::false"
+          echo "skip=false" >> $GITHUB_ENV
         fi
       
     - name: Delete old files
-      if: ${{ !steps.count.outputs.skip }}
+      if: ${{ env.skip != 'true' }}
       run: |
         find input -maxdepth 1 -type f -name '*-AlertBook.csv' -printf "%T@ %p\n" |
           sort -n | head -n -1 | cut -d ' ' -f 2- |
@@ -39,7 +39,7 @@ jobs:
           done
 
     - name: Commit changes
-      if: ${{ !steps.count.outputs.skip }}
+      if: ${{ env.skip != 'true' }}
       run: |
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
