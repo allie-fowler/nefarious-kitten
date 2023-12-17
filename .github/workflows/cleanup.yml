@@ -4,7 +4,7 @@ permissions:
 
 on:
   schedule:
-    - cron: "0 0 * * 0/2"  # Runs every other Sunday at midnight
+    - cron: "30 1 1,15 * *"  # Runs on 1st & 15th at 1:30am
   workflow_dispatch:
 
 jobs:
@@ -14,6 +14,16 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
+
+    - name: Count input files
+      run: |
+        num_files=$(find input -maxdepth 1 -type f -name '*-AlertBook.csv' | wc -l)
+
+        # If there are 1 or fewer files, exit the script
+        if [ "$num_files" -le 1 ]; then
+          echo "Exiting as there are 1 or fewer -AlertBook.csv files in the input directory."
+          exit 0
+        fi
       
     - name: Delete old files
       run: |
