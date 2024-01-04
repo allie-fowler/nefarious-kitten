@@ -16,7 +16,7 @@ if ($inputFile) {
 
     # Rest of your script using $inputFile.FullName
     # Number of days back to collect symbols
-    $lookBack = -7
+    $lookBack = -14
 
     $datenow = Get-Date -Format "MMddyyyy"
     $DaysAgo = (Get-Date).AddDays($lookBack).Date
