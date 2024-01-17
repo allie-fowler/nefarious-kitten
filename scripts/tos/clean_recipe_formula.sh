@@ -1,5 +1,6 @@
 #!/bin/bash
-set +x
+#Expect only one parameter containing a ToS alert script
+s=$1
 
 declare -A replacements=(
     # Operators
@@ -42,46 +43,11 @@ declare -A replacements=(
     
 )
 
-s=$1
-
 # Make the replacements
 for i in "${!replacements[@]}"
 do
     s=${s//$i/${replacements[$i]}}
 done
 
+echo "Copy and paste to Alchem:"
 echo "$s"
-
-IFS=',' read -r -a array <<< "$s"
-
-main_items=()
-threeD_items=()
-W_items=()
-
-current_section=main_items
-
-for element in "${array[@]}"; do
-    trimmed_element=$(echo "$element" | xargs)  # Trim leading and trailing whitespaces
-
-    if [[ $trimmed_element == "3D:"* ]]; then
-        current_section=threeD_items
-        trimmed_element=${trimmed_element#"3D: "}  # Remove prefix
-    elif [[ $trimmed_element == "W:"* ]]; then
-        current_section=W_items
-        trimmed_element=${trimmed_element#"W: "}  # Remove prefix
-    fi
-
-    if [[ $current_section == main_items ]]; then
-        main_items+=("$trimmed_element")
-    elif [[ $current_section == threeD_items ]]; then
-        threeD_items+=("$trimmed_element")
-    elif [[ $current_section == W_items ]]; then
-        W_items+=("$trimmed_element")
-    fi
-done
-
-echo "${main_items[*]},"
-echo -e "\n3D:"
-echo "* ${threeD_items[*]},"
-echo -e "\nW:"
-echo "* ${W_items[*]},"
