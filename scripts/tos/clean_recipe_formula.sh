@@ -46,6 +46,7 @@ s=$1
 
 for i in "${!replacements[@]}"
 do
+    echo $i
     s=${s//$i/${replacements[$i]}}
 done
 
