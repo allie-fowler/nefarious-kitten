@@ -1,4 +1,4 @@
-name: Run Bash Script
+name: Clean Tos Alert Formulas for Paste to Alchem Notes
 
 on:
   workflow_dispatch:
