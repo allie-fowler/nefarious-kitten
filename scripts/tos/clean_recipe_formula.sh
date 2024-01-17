@@ -52,9 +52,7 @@ done
 
 echo "$s"
 
-#!/bin/bash
-
-IFS=', ' read -r -a array <<< "$s"
+IFS=',' read -r -a array <<< "$s"
 
 declare -a main_array
 declare -a threeD_array
@@ -63,23 +61,24 @@ declare -a W_array
 prefix=""
 for element in "${array[@]}"
 do
-    if [[ $element == "3D:"* ]]
+    trimmed_element="$(echo -e "${element}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+    if [[ $trimmed_element == "3D:"* ]]
     then
         prefix="3D"
-        threeD_array+=("${element:4}")
-    elif [[ $element == "W:"* ]]
+        threeD_array+=("${trimmed_element:4}")
+    elif [[ $trimmed_element == "W:"* ]]
     then
         prefix="W"
-        W_array+=("${element:3}")
+        W_array+=("${trimmed_element:3}")
     else
         if [[ $prefix == "3D" ]]
         then
-            threeD_array+=("$element")
+            threeD_array+=("$trimmed_element")
         elif [[ $prefix == "W" ]]
         then
-            W_array+=("$element")
+            W_array+=("$trimmed_element")
         else
-            main_array+=("$element")
+            main_array+=("$trimmed_element")
         fi
     fi
 done
@@ -89,5 +88,3 @@ echo -e "\n3D:"
 printf "* %s,\n" "${threeD_array[*]}"
 echo -e "\nW:"
 printf "* %s,\n" "${W_array[*]}"
-
-
