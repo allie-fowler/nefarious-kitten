@@ -1,0 +1,19 @@
+name: Run Bash Script
+
+on:
+  workflow_dispatch:
+    inputs:
+      inputFormula:
+        description: 'Paste the Tos Alert String'
+        required: true
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v3
+
+    - name: Run script
+      run: ./tos/clean_recipe_formula.sh "${{ github.event.inputs.inputFormula }}"
