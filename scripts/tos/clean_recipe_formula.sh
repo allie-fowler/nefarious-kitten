@@ -44,9 +44,36 @@ declare -A replacements=(
 
 s=$1
 
+# Make the replacements
 for i in "${!replacements[@]}"
 do
     s=${s//$i/${replacements[$i]}}
 done
 
 echo "$s"
+
+IFS=', ' read -r -a array <<< "$s"
+
+declare -a main_array
+declare -a threeD_array
+declare -a W_array
+
+for element in "${array[@]}"
+do
+    if [[ $element == "3D:"* ]]
+    then
+        threeD_array+=("${element:4}")
+    elif [[ $element == "W:"* ]]
+    then
+        W_array+=("${element:3}")
+    else
+        main_array+=("$element")
+    fi
+done
+
+echo "${main_array[*]},"
+echo -e "\n3D:"
+printf "* %s\n" "${threeD_array[@]}"
+echo -e "\nW:"
+printf "* %s\n" "${W_array[@]}"
+
