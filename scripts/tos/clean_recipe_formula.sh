@@ -54,38 +54,34 @@ echo "$s"
 
 IFS=',' read -r -a array <<< "$s"
 
-declare -a main_array
-declare -a threeD_array
-declare -a W_array
+main_items=()
+threeD_items=()
+W_items=()
 
-prefix=""
-for element in "${array[@]}"
-do
-    trimmed_element="$(echo -e "${element}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
-    if [[ $trimmed_element == "3D:"* ]]
-    then
-        prefix="3D"
-        threeD_array+=("${trimmed_element:4}")
-    elif [[ $trimmed_element == "W:"* ]]
-    then
-        prefix="W"
-        W_array+=("${trimmed_element:3}")
-    else
-        if [[ $prefix == "3D" && $trimmed_element != "3D:"* && $trimmed_element != "W:"* ]]
-        then
-            threeD_array+=("$trimmed_element")
-        elif [[ $prefix == "W" && $trimmed_element != "3D:"* && $trimmed_element != "W:"* ]]
-        then
-            W_array+=("$trimmed_element")
-        else
-            main_array+=("$trimmed_element")
-            prefix=""
-        fi
+current_section=main_items
+
+for element in "${array[@]}"; do
+    trimmed_element=$(echo "$element" | xargs)  # Trim leading and trailing whitespaces
+
+    if [[ $trimmed_element == "3D:"* ]]; then
+        current_section=threeD_items
+        trimmed_element=${trimmed_element#"3D: "}  # Remove prefix
+    elif [[ $trimmed_element == "W:"* ]]; then
+        current_section=W_items
+        trimmed_element=${trimmed_element#"W: "}  # Remove prefix
+    fi
+
+    if [[ $current_section == main_items ]]; then
+        main_items+=("$trimmed_element")
+    elif [[ $current_section == threeD_items ]]; then
+        threeD_items+=("$trimmed_element")
+    elif [[ $current_section == W_items ]]; then
+        W_items+=("$trimmed_element")
     fi
 done
 
-echo "${main_array[*]},"
+echo "${main_items[*]},"
 echo -e "\n3D:"
-printf "* %s,\n" "${threeD_array[*]}"
+echo "* ${threeD_items[*]},"
 echo -e "\nW:"
-printf "* %s,\n" "${W_array[*]}"
+echo "* ${W_items[*]},"
