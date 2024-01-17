@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x
 
 declare -A replacements=(
     # Operators
