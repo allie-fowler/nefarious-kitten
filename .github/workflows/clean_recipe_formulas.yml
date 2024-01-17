@@ -16,4 +16,4 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Run script
-      run: ./tos/clean_recipe_formula.sh "${{ github.event.inputs.inputFormula }}"
+      run: ./scripts/tos/clean_recipe_formula.sh "${{ github.event.inputs.inputFormula }}"
