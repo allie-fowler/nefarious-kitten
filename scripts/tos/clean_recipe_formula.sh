@@ -71,14 +71,15 @@ do
         prefix="W"
         W_array+=("${trimmed_element:3}")
     else
-        if [[ $prefix == "3D" ]]
+        if [[ $prefix == "3D" && $trimmed_element != "3D:"* && $trimmed_element != "W:"* ]]
         then
             threeD_array+=("$trimmed_element")
-        elif [[ $prefix == "W" ]]
+        elif [[ $prefix == "W" && $trimmed_element != "3D:"* && $trimmed_element != "W:"* ]]
         then
             W_array+=("$trimmed_element")
         else
             main_array+=("$trimmed_element")
+            prefix=""
         fi
     fi
 done
