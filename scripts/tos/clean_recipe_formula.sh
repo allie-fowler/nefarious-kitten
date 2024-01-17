@@ -13,14 +13,14 @@ declare -A replacements=(
     ['reference BollingerBands("length" = 21)."LowerBand"']='bbb'
 
     # SRSI area
-    ['shared_rp_wsb_StochRSI()."D"']='%D'
-    ['shared_rp_wsb_StochRSI()."D"']='%K'
+    ['shared_rp_wsb_StochRSI().D']='%D'
+    ['shared_rp_wsb_StochRSI()."K"']='%K'
     
     # MACD area
     ['shared_rp_wsb_MACD()."Value"']='MACD fast'
     ['shared_rp_wsb_MACD()."Average"']='MACD slow'
     ['shared_rp_wsb_MACD()."Diff"']='Hist'
-    ['MACDaf("select" = "THREE_DAYS")."Value"']='3D: MACD fast'
+    ['MACDaf(select = THREE_DAYS).Value']='3D: MACD fast'
     ['MACDaf("select" = "THREE_DAYS")."Signal"']='3D: MACD slow'
     ['MACDaf("select" = "THREE_DAYS")."Diff"']='3D: MACD Hist'
     ['MACDaf("select" = "WEEK")."Value"']='W: MACD fast'
