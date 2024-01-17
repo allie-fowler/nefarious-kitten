@@ -52,28 +52,42 @@ done
 
 echo "$s"
 
+#!/bin/bash
+
 IFS=', ' read -r -a array <<< "$s"
 
 declare -a main_array
 declare -a threeD_array
 declare -a W_array
 
+prefix=""
 for element in "${array[@]}"
 do
     if [[ $element == "3D:"* ]]
     then
+        prefix="3D"
         threeD_array+=("${element:4}")
     elif [[ $element == "W:"* ]]
     then
+        prefix="W"
         W_array+=("${element:3}")
     else
-        main_array+=("$element")
+        if [[ $prefix == "3D" ]]
+        then
+            threeD_array+=("$element")
+        elif [[ $prefix == "W" ]]
+        then
+            W_array+=("$element")
+        else
+            main_array+=("$element")
+        fi
     fi
 done
 
 echo "${main_array[*]},"
 echo -e "\n3D:"
-printf "* %s\n" "${threeD_array[@]}"
+printf "* %s,\n" "${threeD_array[*]}"
 echo -e "\nW:"
-printf "* %s\n" "${W_array[@]}"
+printf "* %s,\n" "${W_array[*]}"
+
 
