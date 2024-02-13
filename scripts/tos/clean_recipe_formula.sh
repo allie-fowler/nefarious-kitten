@@ -19,7 +19,7 @@ declare -A replacements=(
     
     # MACD area
     ['shared_rp_wsb_MACD().Value']='MACD fast'
-    ['shared_rp_wsb_MACD().Average']='MACD slow'
+    ['shared_rp_wsb_MACD().Avg']='MACD slow'
     ['shared_rp_wsb_MACD().Diff']='Hist'
     ['MACDaf(select = THREE_DAYS).Value']='3D: MACD fast'
     ['MACDaf(select = THREE_DAYS).Signal']='3D: MACD slow'
@@ -35,8 +35,10 @@ declare -A replacements=(
     ['DIMinus(length = 5)']=-'DI'
     ['DIPlus(length = 5)']='+DI'
     ['DIaf(select = THREE_DAYS).DIg']='3D: -DI'
+    ['DIMinusAF(select = THREE_DAYS)']='3D: -DI'
     ['DIaf(select = THREE_DAYS).DIr']='3D: +DI'
     ['DIaf(select = WEEK).DIg']='W: -DI'
+    ['DIMinusAF(select = WEEK)']='W: -DI'
     ['DIaf(select = WEEK).DIr']='W: +DI'
     ['DIaf(select = MONTH).DIg']='M: -DI'
     ['DIaf(select = MONTH).DIr']='M: +DI'
