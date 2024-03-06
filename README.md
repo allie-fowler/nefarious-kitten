@@ -1,11 +1,5 @@
 # nefarious-kitten
 
-Before beginning with either option, create a branch for yourself
-In this Github repo:
-* Click on "Main" branch
-* In the "Find or create a branch" text box, create any descriptive name for your new branch
-* Click "Create branch:<my-branch>" from main
-
 Proceed with either or both of the following choices
   
 ## Clean and sort alerts exported from ToS.
