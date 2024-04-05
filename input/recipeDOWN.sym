@@ -3,31 +3,32 @@
 =CAT
 =CMI
 =COST
+=DIS
 =GS
 =ISRG
 =NVDA
 =SNPS
 =URI
 =# RECIPE
-=ACN
 =AMZN
 =ASML
+=CAT
 =CF
-=CME
+=CMI
 =COST
-=ISRG
+=DIS
+=EXAS
+=FDX
+=HD
+=LMT
+=LVS
+=NOC
 =NVDA
 =PVH
 =SNPS
-=TTD
 =URI
 =# ----- TO REVIEW ---
-
-
-
-
-
-
+=COP
 
 
 
