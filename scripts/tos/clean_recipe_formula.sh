@@ -57,6 +57,7 @@ done
 IFS=", " read -ra items <<< "$s"
 
 # Initialize empty arrays for each group
+set -x
 declare -a group_3D
 declare -a group_W
 declare -a group_M
