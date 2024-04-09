@@ -8,10 +8,11 @@ declare -A replacements=(
     [' or equal to']='='
     ['is less than']='<'
     [' and ']=', '
+    ['reference ']=''
 
     # CC area
-    ['reference BollingerBands(length = 21).UpperBand']='tbb'
-    ['reference BollingerBands(length = 21).LowerBand']='bbb'
+    ['BollingerBands(length = 21).UpperBand']='tbb'
+    ['BollingerBands(length = 21).LowerBand']='bbb'
 
     # SRSI area
     ['shared_rp_wsb_StochRSI().D']='%D'
