@@ -52,5 +52,49 @@ do
     s=${s//$i/${replacements[$i]}}
 done
 
+# Massage the string for pretty output
+# Split the input string by comma and space
+IFS=", " read -ra items <<< "$s"
+
+# Initialize empty arrays for each group
+declare -a group_3D
+declare -a group_W
+declare -a group_M
+declare -a group_other
+
+# Iterate through the items and categorize them
+for item in "${items[@]}"; do
+    if [[ $item == "3D:"* ]]; then
+        group_3D+=("$item")
+    elif [[ $item == "W:"* ]]; then
+        group_W+=("$item")
+    elif [[ $item == "M:"* ]]; then
+        group_M+=("$item")
+    else
+        group_other+=("$item")
+    fi
+done
+
+# Print the grouped items
+echo "Default Timeframe:"
+for item in "${group_other[@]}"; do
+    echo "$item"
+done
+
+echo "3D:"
+for item in "${group_3D[@]}"; do
+    echo "$item"
+done
+
+echo "W:"
+for item in "${group_W[@]}"; do
+    echo "$item"
+done
+
+echo "M:"
+for item in "${group_M[@]}"; do
+    echo "$item"
+done
+
 echo "Copy and paste to Alchem:"
 echo "$s"
