@@ -43,8 +43,8 @@ declare -A replacements=(
     ['DIaf(select = WEEK).DIr']='W: +DI'
     ['DIaf(select = MONTH).DIg']='M: -DI'
     ['DIaf(select = MONTH).DIr']='M: +DI'
-    ['shared_rp_wsb_DMI()."DIg"']='DI-'
-    ['shared_rp_wsb_DMI()."DIr"']='DI+'
+    ['shared_rp_wsb_DMI().DIg']='DI-'
+    ['shared_rp_wsb_DMI().DIr']='DI+'
     
 )
 
